@@ -12,8 +12,15 @@ const port = process.env.SERVER_PORT | 5000
 app.use(express.json()) // Middleware para parsear
 app.use(express.static('public'));
 
+
+//auth route
 const authRoute = require( './routes/authRoute' );
 app.use('/api' , authRoute);
+
+//admin route
+const adminRoute = require( './routes/adminRoute' );
+app.use('/api/admin' , adminRoute);
+
 
 
 app.get('/', (req, res) => res.send('Hello World!'))
