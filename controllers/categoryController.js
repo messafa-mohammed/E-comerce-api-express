@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Category = require("../models/categoryModel");
+
 const addCategory = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -44,6 +45,61 @@ const addCategory = async (req, res) => {
   }
 };
 
+const getCategories = async(req,res)=>{
+  try {
+
+    const categories = await Category.find({});
+
+    return res.status(200).json({
+      success: true,
+      msg: "Category Fetched seccessfully !!",
+      data: categories
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      msg: error.message,
+    });
+  }
+}
+
+const deleteCategory = async(req,res)=>{
+  try {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(200).json({
+        success: false,
+        msg: "Errors",
+        err: errors.array(),
+      });
+    }
+
+    const { id } = req.body;
+    const categoryData = await Category.findOne({_id:id})
+
+    if(!categoryData){  
+      return res.status(400).json({
+        success: false,
+        msg: `Category ID doesn't existe !!`,
+      });
+    }
+    await Category.findByIdAndDelete({_id:id});
+
+    return res.status(200).json({
+      success: true,
+      msg: "Category Deleted seccessfully !!"
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      msg: error.message,
+    });
+  }
+}
+
 module.exports = {
   addCategory,
+  getCategories,
+  deleteCategory,
 };

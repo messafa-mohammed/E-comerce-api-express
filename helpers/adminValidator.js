@@ -23,3 +23,9 @@ exports.categoryAddValidator = [
     .not()
     .isEmpty(),
 ];
+
+exports.categoryDeleteValidator = [
+    check('id', 'id is required')
+    .not()
+    .isEmpty(),
+];
