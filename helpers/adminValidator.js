@@ -29,3 +29,12 @@ exports.categoryDeleteValidator = [
     .not()
     .isEmpty(),
 ];
+
+exports.categoryUpdateValidator = [
+    check('id', 'id is required')
+    .not()
+    .isEmpty(),
+    check('category_name', 'category_name is required')
+    .not()
+    .isEmpty(),
+];
