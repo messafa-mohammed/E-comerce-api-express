@@ -21,6 +21,10 @@ app.use('/api' , authRoute);
 const adminRoute = require( './routes/adminRoute' );
 app.use('/api/admin' , adminRoute);
 
+//common route
+const commonRoute = require( './routes/commonRoute' );
+app.use('/api' , commonRoute);
+
 
 
 app.get('/', (req, res) => res.send('Hello World!'))
