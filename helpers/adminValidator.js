@@ -38,3 +38,15 @@ exports.categoryUpdateValidator = [
     .not()
     .isEmpty(),
 ];
+
+exports.postCreateValidator = [
+    check('title', 'title is required')
+    .not()
+    .isEmpty(),
+    check('description', 'description is required')
+    .not()
+    .isEmpty(),
+    check('categories', 'categories is required')
+    .not()
+    .isEmpty(),
+];
