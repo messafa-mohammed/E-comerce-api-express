@@ -54,7 +54,87 @@ const getPosts = async(req,res)=>{
   }
 }
 
+const  deletePost=async(req,res)=>{
+    
+  try{
+    const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(400).json({
+      success:false,
+      err:errors.array(),
+    })
+  }
+  const {id}= req.body;
+  const isExists = await Post.findOne({_id:id});
+  if(!isExists){
+    return res.status(400).json({
+        success:false,
+        msg:"No post found with this id"
+    })
+  }
+  await Post.findByIdAndDelete({_id:id})
+
+  return res.status(200).json({
+    success:true,
+    msg:"Post Deleted Successfully !!"
+  })
+  }catch(error){
+    return res.status(400).json({
+      success:false,
+      msg:"Post doesn't exists!!!"
+    })
+  }
+
+}
+
+
+const  updatePost = async (req,res)=>{
+  try{
+    const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(400).json({
+      success:false,
+      err:errors.array(),
+    })
+  }
+  const {id , title , description}= req.body;
+  const isExists = await Post.findOne({_id:id});
+  if(!isExists){
+    return res.status(400).json({
+        success:false,
+        msg:"No post found with this id"
+    })
+  }
+  var updateObj = {
+    title,
+    description
+  };
+  if(req.body.categories){
+    updateObj.categories = req.body.categories;
+  }
+  const updatedPost = await Post.findByIdAndUpdate({_id:id},{
+    $set:updateObj
+  },{new:true})
+
+  return res.status(200).json({
+    success:true,
+    msg:"Post Updated Successfully !!",
+    data:updatedPost
+  })
+  }catch(error){
+    return res.status(400).json({
+      success:false,
+      msg:"Post doesn't exists!!!"
+    })
+  }
+
+}
+
 module.exports = {
   createPost,
   getPosts,
+  deletePost,
+  updatePost
 };
