@@ -46,6 +46,9 @@ const createUser = async(req,res)=>{
 
         const user = new User(obj);
         const userData = await user.save();
+        console.log(password);
+
+        
         
         return res.status(200).json({
             success:true,
