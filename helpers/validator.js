@@ -49,3 +49,9 @@ exports.postLikeUnlikeValidator = [
         .not()
         .isEmpty(),
 ];
+
+exports.postLikeCountValidator = [
+    check( 'post_id', "post_id is required" )
+        .not()
+        .isEmpty(),
+];
