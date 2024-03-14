@@ -4,8 +4,9 @@ const auth = require('../middlewares/authMiddleware')
 const { categoryAddValidator , categoryDeleteValidator , categoryUpdateValidator , postCreateValidator , postUpdateValidator , postDeleteValidator} = require('../helpers/adminValidator')
 const categoryController = require('../controllers/categoryController')
 const postController = require('../controllers/postController')
-const {createUserValidator , updateUserValidator , deleteUserValidator} = require('../helpers/validator')
+const {createUserValidator , updateUserValidator , deleteUserValidator , postLikeUnlikeValidator} = require('../helpers/validator')
 const userController = require('../controllers/userController')
+const likeController = require('../controllers/likeController')
  
 
 // category routes
@@ -25,5 +26,10 @@ router.post('/create-user',auth , createUserValidator , userController.createUse
 router.get('/get-users',auth , userController.getUsers)
 router.post('/update-user',auth , updateUserValidator , userController.updateUser)
 router.post('/delete-user',auth , deleteUserValidator , userController.deleteUser)
+
+//like and  unlike route
+router.post('/post-like',auth , postLikeUnlikeValidator , likeController.postLike)
+
+
 
 module.exports = router;
