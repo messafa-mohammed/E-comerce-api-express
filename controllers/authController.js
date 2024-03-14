@@ -2,6 +2,8 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const Permission = require('../models/permissionModel')
+const UserPermission = require('../models/userPermissionModel')
 
 const registerUser = async (req, res) => {
   try {
@@ -31,8 +33,31 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    console.log(user);
+
     const userData = await user.save();
+
+    //assign default permissions 
+    const defaultPermissions = await Permission.find({
+      is_Default: 1
+    })
+
+    if(defaultPermissions.length > 0){
+      const permissionArray = [];
+      defaultPermissions.forEach(permission =>{
+        permissionArray.push({
+          permission_name : permission.permission_name,
+          permission_value:[0,1,2,3]
+        });
+      });
+
+      const userPermission = new UserPermission({
+        user_id: userData._id,
+        permission:permissionArray
+      })
+
+      await userPermission.save();
+
+    }
 
     return res.status(200).json({
       success: true,
