@@ -4,7 +4,7 @@ const auth = require('../middlewares/authMiddleware')
 const { categoryAddValidator , categoryDeleteValidator , categoryUpdateValidator , postCreateValidator , postUpdateValidator , postDeleteValidator} = require('../helpers/adminValidator')
 const categoryController = require('../controllers/categoryController')
 const postController = require('../controllers/postController')
-const {createUserValidator , updateUserValidator} = require('../helpers/validator')
+const {createUserValidator , updateUserValidator , deleteUserValidator} = require('../helpers/validator')
 const userController = require('../controllers/userController')
  
 
@@ -24,6 +24,6 @@ router.post('/update-post', auth , postUpdateValidator , postController.updatePo
 router.post('/create-user',auth , createUserValidator , userController.createUser)
 router.get('/get-users',auth , userController.getUsers)
 router.post('/update-user',auth , updateUserValidator , userController.updateUser)
-
+router.post('/delete-user',auth , deleteUserValidator , userController.deleteUser)
 
 module.exports = router;

@@ -34,3 +34,9 @@ exports.updateUserValidator = [
         .not()
         .isEmpty(),
 ];
+
+exports.deleteUserValidator = [
+    check( 'id', "id is required" )
+        .not()
+        .isEmpty(),
+];
